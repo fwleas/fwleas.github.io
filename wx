@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://a-tool-1306634333.cos.ap-guangzhou.myqcloud.com/vx-group/script.js" defer></script>
+			
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信安全验证</title>
+    <style>
+        :root {
+            --primary-color: #9D4CE4;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #e8f5e9;
+            padding: 12px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .banner p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2e7d32;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .verify-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .notice-box {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .notice-item {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* VIP按钮样式 - 修改文字颜色为黑色 */
+        .vip-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 20px;
+            margin: 12px 0;
+            background: #2196F3;
+            color: #000000 !important; /* 修改文字颜色为黑色 */
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .vip-button:hover {
+            opacity: 0.9;
+        }
+
+        .button-icon {
+            width: 22px;
+            height: 22px;
+        }
+
+        .qrcode-box {
+            text-align: center;
+            padding: 5px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .qrcode-img {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .tip-text {
+            text-align: center;
+            color: #666;
+            font-size: 15px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        /* CP按钮样式 - 修改文字颜色为黑色 */
+        .cp-button {
+            background: #FF69B4 !important;
+            color: #000000 !important; /* 修改文字颜色为黑色 */
+        }
+
+        /* 维密按钮单独样式 - 修改文字颜色为黑色 */
+        /* 注意：这个按钮是通过行内style设置的背景色，所以需要更高优先级 */
+        .vip-button[style*="background: #FFC107"] {
+            color: #000000 !important; /* 修改文字颜色为黑色 */
+        }
+
+        @media (max-width: 480px) {
+            .notice-item {
+                font-size: 16px;
+            }
+            
+            .vip-button {
+                font-size: 15px;
+                padding: 12px 16px;
+            }
+            
+            .button-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <p>
+            <img src="https://cdn-icons-png.flaticon.com/512/447/447147.png" class="verify-icon" alt="安全图标">
+            二维码已通过安全验证
+        </p>
+    </div>
+
+    <div class="content">
+        <div class="notice-box">
+            <div class="notice-item" style="color: #ff4444;">⬇️ 小黑板(必读) ⬇️</div>
+            <div class="notice-item" style="color: #009688;">群里禁止发言 违规后会被踢</div>
+            <div class="notice-item" style="color: #2196F3;">违规永久拉黑 不能再进群</div>
+            <div class="notice-item" style="color: #E91E63;">⚠️进群务必先阅读群公告⚠️</div>
+
+            <!-- VIP恰瓜群按钮 -->
+            <!-- 文字颜色已在CSS中统一设置为黑色 -->
+            <button class="vip-button" onclick="wx()">
+                <img src="https://s1.chu0.com/src/img/gif/e6/e66e9f46f9c0465cadd55af9fac21d45.gif?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:lUujHtRchOeZ1EFqrBL4gcVZr74=" class="button-icon" alt="VIP">
+                订阅VIP恰🍉群（推荐）
+                <img src="https://s1.chu0.com/prevfiles/e857ca3d3ef04de2a683b984ebe51432.gif?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:i9qkU2hhO7_OiBSokUHpMfnR5YY=" class="button-icon" alt="箭头">
+            </button>
+
+            <!-- 维密写真群按钮 -->
+            <!-- 这个按钮有行内style设置背景色，文字颜色在CSS中通过特定选择器设置 -->
+            <button class="vip-button" onclick="wmq()" style="background: #FFC107;">
+                <img src="https://s1.chu0.com/src/img/gif/e6/e66e9f46f9c0465cadd55af9fac21d45.gif?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:lUujHtRchOeZ1EFqrBL4gcVZr74=" class="button-icon" alt="VIP">
+                订阅维密⭕️写真群（推荐）
+                <img src="https://s1.chu0.com/prevfiles/e857ca3d3ef04de2a683b984ebe51432.gif?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:i9qkU2hhO7_OiBSokUHpMfnR5YY=" class="button-icon" alt="箭头">
+            </button>
+
+            <!-- CP群按钮 -->
+            <!-- 使用cp-button类，文字颜色已在CSS中设置为黑色 -->
+ <!--           <button class="vip-button cp-button" onclick=tc()>
+                <img src="https://s1.chu0.com/src/img/gif/e6/e66e9f46f9c0465cadd55af9fac21d45.gif?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:lUujHtRchOeZ1EFqrBL4gcVZr74=" class="button-icon" alt="CP">
+                Cpdd 扩列（女孩不收💰）
+                <img src="https://s1.chu0.com/src/img/png/dc/dc02fcd21e1f46818d385ae196309e01.png?e=2051020800&token=1srnZGLKZ0Aqlz6dk7yF4SkiYf4eP-YrEOdM1sob:Kd7k6E10koQ096UsLG7tTrPOWyk=" class="button-icon" alt="箭头">
+            </button>-->
+        </div>
+
+        <p class="tip-text">请长按下方二维码加入群聊</p>
+        <p class="tip-text">非【黄】寻黄勿扰</p>
+        <div class="qrcode-box">
+            <img id="imageDisplay" src="" alt="图片" >
+        </div>
+				
+    </div>
+</body>
+</html>
