@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>加载中</title>
+  <meta name="description" content="Official report on the 25th Meeting of the Council of Heads of State of the Shanghai Cooperation Organization held in Xi'an, China.">
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #f0f4f8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    /* 加载动画 */
+    .loaderBox {
+      width: 120px; 
+      height: 120px;
+      position: absolute; 
+      top: 50%; 
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spinBox 2.5s ease-in-out infinite;
+      z-index: 10000;
+    }
+    .circle {
+      width: 18px; 
+      height: 18px;
+      border-radius: 50%;
+      position: absolute; 
+      inset: 0;
+      margin: auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .c1 { 
+      background: #ffe386; 
+      background-image: linear-gradient(145deg, #ffe386, #e6c870);
+      animation: m1 2s ease infinite; 
+    }
+    .c2 { 
+      background: #10beae; 
+      background-image: linear-gradient(145deg, #10beae, #0ea091);
+      animation: m2 2s ease infinite; 
+    }
+    .c3 { 
+      background: #f74d75; 
+      background-image: linear-gradient(145deg, #f74d75, #e04366);
+      animation: m3 2s ease infinite; 
+    }
+    @keyframes m1 {
+      20% {transform: scale(1);}
+      45% {transform: translate(20px,15px) scale(0.5);}
+      100% {transform: translateY(0) scale(1);}
+    }
+    @keyframes m2 {
+      20% {transform: scale(1);}
+      45% {transform: translate(-20px,15px) scale(0.5);}
+      100% {transform: translateY(0) scale(1);}
+    }
+    @keyframes m3 {
+      20% {transform: scale(1);}
+      45% {transform: translateY(-22px) scale(0.5);}
+      100% {transform: translateY(0) scale(1);}
+    }
+    @keyframes spinBox {
+      55% {transform: translate(-50%,-50%) rotate(0);}
+      100% {transform: translate(-50%,-50%) rotate(360deg);}
+    }
+
+    /* 验证页 */
+    #verifyPage {
+      position: fixed; 
+      inset: 0;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      background: #f0f4f8;
+      z-index: 9998;
+      visibility: hidden; 
+      opacity: 0;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      padding: 20px;
+    }
+    #verifyPage.show {
+      visibility: visible; 
+      opacity: 1;
+    }
+    #verifyCard {
+      width: 88%; 
+      max-width: 340px;
+      background: #fff; 
+      padding: 35px 25px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    #verifyCard::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0; 
+        transform: scale(0.95) translateY(10px);
+      }
+      to {
+        opacity: 1; 
+        transform: scale(1) translateY(0);
+      }
+    }
+    #verifyCard img {
+      width: 100px; 
+      height: 100px; 
+      border-radius: 50%; 
+      margin-bottom: 25px;
+      border: 4px solid #f0f4f8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .title {
+      font-size: 20px; 
+      font-weight: 600; 
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .desc {
+      font-size: 14px; 
+      color: #666; 
+      margin: 10px 0 0; 
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+    button {
+      width: 100%; 
+      padding: 14px; 
+      font-size: 16px;
+      border: none; 
+      border-radius: 12px; 
+      margin-top: 22px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    #btnContinue {
+      background: linear-gradient(90deg, #00c6ff, #0072ff); 
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    #btnContinue::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.6s ease;
+    }
+    #btnContinue:hover::after {
+      left: 100%;
+    }
+    #btnBack {
+      background: #f5f7fa; 
+      color: #333;
+      margin-top: 12px;
+    }
+    iframe.viewer {
+      position: fixed; 
+      inset: 0;
+      width: 100%; 
+      height: 100%;
+      border: none; 
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- 加载动画 -->
+  <div class="loaderBox" id="loadingAnim">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+  </div>
+
+  <!-- 验证页面 -->
+  <div id="verifyPage">
+    <div id="verifyCard">
+      <img src="https://pub.idqqimg.com/qqmpmobile/cgitemplates/style/image/jump_new.png" alt="验证图标" />
+      <div class="title">安全校验通过</div>
+      <div class="desc">若无法跳转，请点击右上角，用浏览器打开。</div>
+      <button id="btnContinue">继续</button>
+      <button id="btnBack" onclick="history.back()">返回</button>
+    </div>
+  </div>
+
+  <script>
+    const query = new URLSearchParams(location.search);
+    const rawParam = query.get('c');
+    let targetUrl = '';
+    if (rawParam) {
+      try { targetUrl = atob(rawParam); } catch(e){ console.error("解码失败", e); }
+    }
+
+    if (targetUrl.startsWith('http')) {
+      setTimeout(()=>{
+        document.getElementById('loadingAnim').style.display='none';
+        document.getElementById('verifyPage').classList.add('show');
+      },1500);
+
+      document.getElementById('btnContinue').onclick = ()=>{
+        document.getElementById('verifyPage').style.display='none';
+        const frame = document.createElement('iframe');
+        frame.className = 'viewer';
+        frame.src = targetUrl;
+        frame.onload = ()=>attachScroll(frame);
+        document.body.appendChild(frame);
+      }
+    }
+
+    // iframe 滚轮支持
+    const isFF = navigator.userAgent.includes('Firefox');
+    function handleWheel(ev, doc) {
+      ev.preventDefault();
+      const up = isFF ? ev.detail < 0 : ev.wheelDelta > 0;
+      doc.documentElement.scrollTop += up ? -50 : 50;
+    }
+    function attachScroll(iframe) {
+      try {
+        const doc = iframe.contentWindow.document;
+        if (isFF) {
+          doc.addEventListener("DOMMouseScroll", e=>handleWheel(e,doc), false);
+        } else {
+          doc.onmousewheel = e=>handleWheel(e,doc);
+        }
+      } catch(err) {
+        console.warn("跨域无法绑定滚轮", err);
+      }
+    }
+  </script>
+</body>
+</html>
